@@ -1,7 +1,6 @@
 package core
 
 import (
-	"encoding/binary"
 	"fmt"
 	"sync"
 	"time"
@@ -43,7 +42,13 @@ func (p *Poller) AddTimer(duration time.Duration) (chan struct{}, error) {
 	}
 
 	// Set the timer
-	ts := unix.NsecToItimerspec(duration.Nanoseconds())
+	nsec := duration.Nanoseconds()
+	ts := unix.ItimerSpec{
+		Value: unix.Timespec{
+			Sec:  nsec / 1e9,
+			Nsec: nsec % 1e9,
+		},
+	}
 	if err := unix.TimerfdSettime(tfd, 0, &ts, nil); err != nil {
 		unix.Close(tfd)
 		return nil, err
