@@ -5,10 +5,37 @@ import "time"
 type OpCode byte
 
 const (
-	OpPark       OpCode = 0x01
-	OpWake       OpCode = 0x02
-	OpPushIntent OpCode = 0x03
+	OpPark        OpCode = 0x01
+	OpWake        OpCode = 0x02
+	OpPushIntent  OpCode = 0x03
+	OpRegister    OpCode = 0x04
+	OpRequestPace OpCode = 0x05
+	OpHeartbeat   OpCode = 0x06
 )
+
+type Purpose string
+
+const (
+	PurposeSocial   Purpose = "social"
+	PurposeResearch Purpose = "research"
+	PurposeBurst    Purpose = "burst"
+	PurposeIdle     Purpose = "idle"
+)
+
+type RegistrationRequest struct {
+	AgentID   string   `json:"agent_id"`
+	Namespace [16]byte `json:"namespace"`
+	Purpose   Purpose  `json:"purpose"`
+}
+
+type PaceRequest struct {
+	AgentID string  `json:"agent_id"`
+	Weight  float64 `json:"weight"` // Multiplier for the base purpose lambda
+}
+
+type PaceResponse struct {
+	IntervalMs int64 `json:"interval_ms"`
+}
 
 type Intention struct {
 	Namespace [16]byte `json:"namespace"`
