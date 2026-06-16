@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "description": "Core coordination layer and state vault for agentic systems.",
   "repository": "github.com/nathfavour/spine",
-  "source_dir": "~/.spine/source",
-  "install_dir": "~/.local/bin",
   "build": {
     "steps": [
       "mkdir -p bin",
