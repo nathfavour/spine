@@ -6,7 +6,7 @@
   "build": {
     "steps": [
       "mkdir -p bin",
-      "CGO_ENABLED=0 go build -ldflags=\"-s -w\" -o bin/spine ./cmd/spine"
+      "CGO_ENABLED=0 go build -ldflags='-s -w' -o bin/spine cmd/spine/main.go"
     ],
     "bin": "bin/spine",
     "toolchain": "go"
